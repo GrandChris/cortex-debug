@@ -24,6 +24,9 @@ export class SWOGraphProcessor extends EventEmitter implements SWODecoder {
         this.scale = config.scale || 1;
         this.graphId = config.graphId;
     }
+    localTimeStamp(timestamp: number) {
+        // throw new Error("Method not implemented.");
+    }
 
     public softwareEvent(packet: Packet) {
         if (packet.port !== this.port) { return; }

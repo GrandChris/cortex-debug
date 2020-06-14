@@ -23,6 +23,9 @@ export class SWOConsoleProcessor implements SWODecoder {
             this.output.show(true);
         }
     }
+    localTimeStamp(timestamp: number) {
+        // throw new Error("Method not implemented.");
+    }
 
     public softwareEvent(packet: Packet) {
         if (packet.port !== this.port) { return; }

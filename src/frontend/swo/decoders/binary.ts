@@ -22,6 +22,9 @@ export class SWOBinaryProcessor implements SWODecoder {
 
         this.output = vscode.window.createOutputChannel(`SWO: ${config.label || ''} [port: ${this.port}, encoding: ${this.encoding}]`);
     }
+    localTimeStamp(timestamp: number) {
+        // throw new Error("Method not implemented.");
+    }
 
     public softwareEvent(packet: Packet) {
         if (packet.port !== this.port) { return; }

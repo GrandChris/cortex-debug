@@ -105,6 +105,18 @@ define ITMSyncDisable
 	set language auto
 end
 
+define ITMLocalTimestampsEnable
+	set language c
+	set *0xE0000E80 |= 0x2
+	set language auto
+end
+
+define ITMLocalTimestampsDisable
+	set language c
+	set *0xE0000E80 &= ~(0x2)
+	set language auto
+end
+
 define ITMDWTTransferEnable
 	set language c
 	set *0xE0000E80 |= 0x8
@@ -211,6 +223,18 @@ end
 define DisableCPICountEvent
 	set language c
 	set *0xE0001000 &= ~(0x20000)
+	set language auto
+end
+
+define EnableExceptionTraceEvent
+	set language c
+	set *0xE0001000 |= 0x10000
+	set language auto
+end
+
+define DisableExceptionTraceEvent
+	set language c
+	set *0xE0001000 &= ~(0x10000)
 	set language auto
 end
 

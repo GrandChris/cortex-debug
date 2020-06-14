@@ -86,6 +86,8 @@ export class OpenOCDServerController extends EventEmitter implements GDBServerCo
             'ITMDWTTransferEnable',
             'DisableITMPorts 0xFFFFFFFF',
             `EnableITMPorts ${portMask}`,
+            'ITMLocalTimestampsEnable',
+            `EnableExceptionTraceEvent`,
             'EnableDWTSync',
             'ITMSyncEnable',
             'ITMGlobalEnable'

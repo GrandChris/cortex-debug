@@ -42,6 +42,9 @@ export class SWOAdvancedProcessor extends EventEmitter implements SWODecoder {
             throw new Error(`Unable to load decoder class from: ${config.decoder}`);
         }
     }
+    localTimeStamp(timestamp: number) {
+        // throw new Error("Method not implemented.");
+    }
 
     public softwareEvent(packet: Packet) {
         if (this.ports.indexOf(packet.port) !== -1) {

@@ -8,5 +8,7 @@ export interface SWODecoder {
     synchronized();
     lostSynchronization();
 
+    localTimeStamp(timestamp: number);
+
     dispose();
 }

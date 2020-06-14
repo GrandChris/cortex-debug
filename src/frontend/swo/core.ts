@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 
+import { SWOExceptionTracer } from './decoders/exception_tracer'
 import { SWOConsoleProcessor } from './decoders/console';
 import { SWOBinaryProcessor } from './decoders/binary';
 import { SWOGraphProcessor } from './decoders/graph';
@@ -269,7 +270,8 @@ export class SWOCore {
 
             switch (conf.type) {
                 case 'console':
-                    this.processors.push(new SWOConsoleProcessor(conf as SWOConsoleDecoderConfig));
+                    this.processors.push(new SWOExceptionTracer());
+                    // this.processors.push(new SWOConsoleProcessor(conf as SWOConsoleDecoderConfig));
                     break;
                 case 'binary':
                     this.processors.push(new SWOBinaryProcessor(conf as SWOBinaryDecoderConfig));
@@ -330,7 +332,7 @@ export class SWOCore {
             }
             else {
                 // tslint:disable-next-line:no-console
-                console.log('Received Other Hardware Packet: ', packet);
+                //console.log('Received Other Hardware Packet: ', packet);
             }
         }
     }
@@ -342,6 +344,8 @@ export class SWOCore {
             const bits = packet.data.readUInt8(i) & 0x7F;
             timestamp = timestamp | bits;
         }
+
+        this.processors.forEach((p) => p.localTimeStamp(timestamp));
     }
 
     private overflow() {}

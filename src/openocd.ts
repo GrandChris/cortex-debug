@@ -12,6 +12,7 @@ export class OpenOCDServerController extends EventEmitter implements GDBServerCo
     private swoPath: string;
     private args: ConfigurationArguments;
     private ports: { [name: string]: number };
+    private finishedOpenOCDConfiguration = "Info : Finished OpenOCD configuration";
 
     constructor() {
         super();
@@ -153,6 +154,10 @@ export class OpenOCDServerController extends EventEmitter implements GDBServerCo
             commands.push(`tpiu config ${tpiuIntExt} uart off ${this.args.swoConfig.cpuFrequency} ${this.args.swoConfig.swoFrequency}`);
         }
 
+        commands.push('init');
+        commands.push('reset init');
+        commands.push(`echo "${this.finishedOpenOCDConfiguration}"`);        
+
         if (commands.length > 0) {
             serverargs.push('-c', commands.join('; '));
         }
@@ -165,13 +170,7 @@ export class OpenOCDServerController extends EventEmitter implements GDBServerCo
     }
 
     public initMatch(): RegExp {
-        /*
-        // Following will work with or without the -d flag to openocd or using the tcl
-        // command `debug_level 3`; and we are looking specifically for gdb port(s) opening up
-        // When debug is enabled, you get too many matches looking for the cpu. This message
-        // has been there atleast since 2016-12-19
-        */
-        return /Info\s:[^\n]*Listening on port \d+ for gdb connection/i;
+        return RegExp(this.finishedOpenOCDConfiguration);
     }
 
     public serverLaunchStarted(): void {
